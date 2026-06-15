@@ -2,6 +2,7 @@ bits 64
 default rel
 
 global findObject
+global monedasTotales
 section .text
 
 findObject:
@@ -30,3 +31,23 @@ findObject:
     .notFound:
     mov rax, 0
     ret
+monedasTotales:
+    xor eax, eax        ; contador = 0
+    test edx, edx       ; si celdas es 0, terminamos
+    jz .fin
+
+    .ciclo:
+    movzx r9d, byte [rcx]      ; leer el carácter actual
+    cmp r9b, r8b        ; comparar con el carácter buscado
+    jne .siguiente
+    inc eax             ; si coincide, incrementar contador
+
+    .siguiente:
+    inc rcx             ; avanzar al siguiente carácter
+    dec edx             ; decrementar celdas restantes
+    jnz .ciclo
+    .fin:
+    ret
+
+    
+    

@@ -8,6 +8,7 @@
 #define COLUMNS 60
 
 int findObject(char *matrix, int columns, int searchInRow, int searchInColumn, char character);
+int monedasTotales(char *matrix, int celdas, char character);
 
 void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
 {
@@ -60,19 +61,27 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
     SetConsoleTextAttribute(hConsole, 7);
 }
 
-int juego()
+void juego()
 {
     int playerY = 1;
     int playerX = 1;
-    bool haveKey = false;
+    int puntaje = 0;
+    int monedasRecogidas = 0;
+    int modedastotales = 0;
+    //bool haveKey = false;
     fflush(stdin);
-    char tecla = 'm'; // Caracter que no se usa para nada pero necesario para empezar el ciclo
+    char tecla = 'm';
+    
+     modedastotales = monedasTotales(&mapa1[0][0], ROWS * COLUMNS, 'M');
     while (tecla != 113 && tecla != EOF)
     {
         system("cls");
         printf("--- NIVEL 1 ---\n");
-
+        printf("Puntaje: %d\n", puntaje);
+        printf("Monedas recogidas: %d\n", monedasRecogidas);
+        printf("Monedas totales: %d\n", modedastotales);
         imprimirMapa(playerY, playerX, mapa1);
+
         tecla = _getch();
 
         if (tecla == 'w' || tecla == 'W')
