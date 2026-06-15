@@ -1,3 +1,4 @@
-int juego (){
-    return 0;
+#include "juego.h"
+void juego (){
+    imprimirMapa();
 }

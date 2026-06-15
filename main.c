@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h> 
+#include "juego.c"
 
 void mostrarPantallaInicio() {
     
@@ -61,6 +62,7 @@ int main() {
     SetConsoleCursorInfo(hConsole, &cursorInfo);
 
     mostrarPantallaInicio();
+    juego();
 
 
 
