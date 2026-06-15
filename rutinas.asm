@@ -12,13 +12,13 @@ findObject:
 
     ; dirección = base + índice * 4
     movsx rax, eax
-    lea r10, [rcx + rax*4]  ; si le enviamos un char (1 byte) hay que cambiar "rax*4" a "rax"
+    lea r10, [rcx + rax]  ; si le enviamos un char (1 byte) hay que cambiar "rax*4" a "rax"
 
     ; leer entero
-    mov eax, [r10]
+    movzx eax, byte [r10]
 
     ; obtener character
-    mov r11d, [rsp + 40]
+    movzx r11d, byte [rsp + 40]
 
     ; compara
     cmp eax, r11d
