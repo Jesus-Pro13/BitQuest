@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h>
+#include "mapas.h"
 #define ROWS 60
 #define COLUMNS 60
 
@@ -44,6 +45,34 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS]) {
 
     SetConsoleTextAttribute(hConsole, 7);
 
+}
+
+void juego (){
+    int playerY = 1;
+    int playerX = 1;
+    fflush(stdin);
+    while (1) {
+        system("cls");
+        printf("--- NIVEL 1 ---\n");
+        
+        imprimirMapa(playerY, playerX, mapa1);
+        char tecla = _getch();
+        
+        
+        if (tecla == 'w' || tecla == 'W' && mapa1[playerY - 1][playerX] != '#') {
+            playerY--;
+        }
+        if (tecla == 's' || tecla == 'S' && mapa1[playerY + 1][playerX] != '#') {
+            playerY++;
+        }
+        if (tecla == 'a' || tecla == 'A' && mapa1[playerY][playerX - 1] != '#') {
+            playerX--;
+        }
+        if (tecla == 'd' || tecla == 'D' && mapa1[playerY][playerX + 1] != '#') {
+            playerX++;
+        }
+ 
+    }
 }
 
 #endif
