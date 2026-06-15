@@ -30,3 +30,27 @@ findObject:
     .notFound:
     mov rax, 0
     ret
+
+; funcion que valida el movimiento del jugador, recibe la posicion actual del jugador y la posicion a la que se quiere mover, devuelve 1 si el movimiento es valido y 0 si no
+validar_movimiento:
+    ;indice del jugador
+    mov eax, r8d ;nueva fila
+    imul eax, edx ;nueva fila * columnas
+    add eax, r9d ;nueva fila * columnas + nueva columna
+
+    ;conversion a 64 bits para el desplazamiento de memoria
+    movsx rax, eax
+
+    mov r10b, byte [rcx + rax] ;obtenemos el valor del mapa en la nueva posicion
+
+    ;verificamos si es pared
+    cmp r10b, '#' ;si es una pared, el movimiento no es valido
+    je .movimiento_invalido
+
+    ;si no es pared retorna valido 1
+    mov rax, 1
+    ret
+
+.movimiento_invalido:
+    mov rax, 0
+    ret
