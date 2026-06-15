@@ -4,6 +4,7 @@ default rel
 global findObject
 global monedasTotales
 global validar_movimiento
+global contarCeldaslibres
 section .text
 
 findObject:
@@ -75,4 +76,21 @@ validar_movimiento:
 
 .movimiento_invalido:
     mov rax, 0
+    ret
+contarCeldaslibres:
+    xor eax, eax        ; contador = 0
+    test edx, edx       ; si celdas es 0, terminamos
+    jz .fin
+
+    .ciclo_contar:
+    movzx r9d, byte [rcx]      ; leer el carácter actual
+    cmp r9b, '.'        ; comparar con el carácter buscado
+    jne .siguiente_contar
+    inc eax             ; si coincide, incrementar contador
+
+    .siguiente_contar:
+    inc rcx             ; avanzar al siguiente carácter
+    dec edx             ; decrementar celdas restantes
+    jnz .ciclo_contar
+    .fin:
     ret

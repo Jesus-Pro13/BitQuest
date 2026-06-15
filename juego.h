@@ -10,6 +10,7 @@
 int findObject(char *matrix, int columns, int searchInRow, int searchInColumn, char character);
 int monedasTotales(char *matrix, int celdas, char character);
 int validar_movimiento(char *matrix, int columns, int searchInRow, int searchInColumn, char character);
+int contarCeldaslibres(char *matrix, int celdas);
 
 void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
 {
@@ -67,6 +68,7 @@ void juego()
     int playerY = 1;
     int playerX = 1;
     int puntaje = 0;
+    int llave = 0;
     int monedasRecogidas = 0;
     int modedastotales = 0;
     //bool haveKey = false;
@@ -74,6 +76,8 @@ void juego()
     char tecla = 'm';
     
      modedastotales = monedasTotales(&mapa1[0][0], ROWS * COLUMNS, 'M');
+     int libres = contarCeldaslibres(&mapa1[0][0], ROWS * COLUMNS);
+   
     while (tecla != 113 && tecla != EOF)
     {
         system("cls");
@@ -81,6 +85,7 @@ void juego()
         printf("Puntaje: %d\n", puntaje);
         printf("Monedas recogidas: %d\n", monedasRecogidas);
         printf("Monedas totales: %d\n", modedastotales);
+         printf("Celdas libres: %d\n", libres);
         imprimirMapa(playerY, playerX, mapa1);
 
         tecla = _getch();
