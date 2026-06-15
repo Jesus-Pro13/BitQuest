@@ -1,4 +1,5 @@
 #include "juego.h"
+#include "mapas.h"
 void juego (){
-    imprimirMapa();
+    imprimirMapa(1, 1, mapa1); 
 }
