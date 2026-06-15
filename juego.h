@@ -9,6 +9,7 @@
 
 int findObject(char *matrix, int columns, int searchInRow, int searchInColumn, char character);
 int monedasTotales(char *matrix, int celdas, char character);
+int validar_movimiento(char *matrix, int columns, int searchInRow, int searchInColumn, char character);
 
 void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
 {
@@ -86,28 +87,28 @@ void juego()
 
         if (tecla == 'w' || tecla == 'W')
         {
-            if (!findObject(&mapa1[0][0], COLUMNS, (playerY - 1), playerX, '#'))
+            if (validar_movimiento(&mapa1[0][0], COLUMNS, (playerY - 1), playerX, '#'))
             {
                 playerY--;
             }
         }
         if (tecla == 's' || tecla == 'S')
         {
-            if (!findObject(&mapa1[0][0], COLUMNS, (playerY + 1), playerX, '#'))
+            if (validar_movimiento(&mapa1[0][0], COLUMNS, (playerY + 1), playerX, '#'))
             {
                 playerY++;
             }
         }
         if (tecla == 'a' || tecla == 'A')
         {
-            if (!findObject(&mapa1[0][0], COLUMNS, playerY, (playerX - 1), '#'))
+            if (validar_movimiento(&mapa1[0][0], COLUMNS, playerY, (playerX - 1), '#'))
             {
                 playerX--;
             }
         }
         if (tecla == 'd' || tecla == 'D')
         {
-            if (!findObject(&mapa1[0][0], COLUMNS, playerY, (playerX + 1), '#'))
+            if (validar_movimiento(&mapa1[0][0], COLUMNS, playerY, (playerX + 1), '#'))
             {
                 playerX++;
             }
