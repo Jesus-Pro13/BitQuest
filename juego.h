@@ -96,7 +96,7 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
         if (tecla == 'w' || tecla == 'W')
         {
           
-            if (!findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, '#'))
+            if (validar_movimiento(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, '#'))
             {
                 if(findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'M')) {
                     monedasRecogidas++;
@@ -145,7 +145,7 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
 
         if (tecla == 's' || tecla == 'S')
         {
-            if (!findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, '#'))
+            if (validar_movimiento(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, '#'))
             {
                 if(findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'M')) {
                     monedasRecogidas++;
@@ -191,7 +191,7 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
         }
         if (tecla == 'a' || tecla == 'A')
         {
-            if (!findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), '#'))
+            if (validar_movimiento(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), '#'))
             {
                 if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'M')) {
                     monedasRecogidas++;
@@ -237,7 +237,7 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
         }
         if (tecla == 'd' || tecla == 'D')
         {
-            if (!findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), '#'))
+            if (validar_movimiento(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), '#'))
             {
                 if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'M')) {
                     monedasRecogidas++;
