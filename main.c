@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h> 
-#include "juego.c"
+#include "juego.h"
 
 void mostrarPantallaInicio() {
     
