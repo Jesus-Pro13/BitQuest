@@ -4,5 +4,3 @@ gcc -c .\main.c -o .\main.obj
 gcc .\main.obj .\rutinas.obj -o .\BitQuest.exe
 
 del .\main.obj .\rutinas.obj
-
-.\BitQuest.exe
