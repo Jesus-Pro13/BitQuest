@@ -37,11 +37,15 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
     int inicioX = pX - radio;
 
     // Ponemos limites para que la camara no intente leer fuera de la matriz si nos pegamos a un borde
-    if (inicioY < 0) inicioY = 0;
-    if (inicioX < 0) inicioX = 0;
-    if (inicioY > 60 - tamVentana) inicioY = 60 - tamVentana;
-    if (inicioX > 60 - tamVentana) inicioX = 60 - tamVentana;
-    
+    if (inicioY < 0)
+        inicioY = 0;
+    if (inicioX < 0)
+        inicioX = 0;
+    if (inicioY > 60 - tamVentana)
+        inicioY = 60 - tamVentana;
+    if (inicioX > 60 - tamVentana)
+        inicioX = 60 - tamVentana;
+
     // Ciclo doble para imprimir el pedazo de mapa visible fila por fila y columna por columna
     for (int i = inicioY; i < inicioY + tamVentana; i++)
     {
@@ -57,11 +61,16 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
             {
                 // Si no es el jugador, leemos que hay en esa celda y le asignamos su color
                 char celda = mapa[i][j];
-                if (celda == '#') SetConsoleTextAttribute(hConsole, 8);      // Muros grises
-                else if (celda == 'M') SetConsoleTextAttribute(hConsole, 14); // Monedas amarillas
-                else if (celda == 'K') SetConsoleTextAttribute(hConsole, 10); // Llave verde
-                else if (celda == 'D') SetConsoleTextAttribute(hConsole, 12); // Puerta roja
-                else SetConsoleTextAttribute(hConsole, 15);                   // Espacios en blanco
+                if (celda == '#')
+                    SetConsoleTextAttribute(hConsole, 8); // Muros grises
+                else if (celda == 'M')
+                    SetConsoleTextAttribute(hConsole, 14); // Monedas amarillas
+                else if (celda == 'K')
+                    SetConsoleTextAttribute(hConsole, 10); // Llave verde
+                else if (celda == 'D')
+                    SetConsoleTextAttribute(hConsole, 12); // Puerta roja
+                else
+                    SetConsoleTextAttribute(hConsole, 15); // Espacios en blanco
 
                 printf("%c", celda);
             }
@@ -72,14 +81,16 @@ void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
 }
 
 // Muestra el resumen rapido despues de terminar el nivel 1 o 2
-void resumen(int nivel, int recogidasNivel, int totalesNivel, int pasosNivel) {
+void resumen(int nivel, int recogidasNivel, int totalesNivel, int pasosNivel)
+{
     printf("\n--- Resumen del Nivel %d ---\n", nivel);
     printf("Monedas recogidas: %d / %d\n", recogidasNivel, totalesNivel);
     printf("Pasos dados      : %d\n", pasosNivel);
 }
 
 // Muestra las estadisticas globales al terminar todos los niveles o salir del juego
-void resumenFinal(int nivel, int recogidasTotal, int totalesJuego, int pasosTotales) {
+void resumenFinal(int nivel, int recogidasTotal, int totalesJuego, int pasosTotales)
+{
     printf("\n=============================\n");
     printf("--   ! RESUMEN FINAL !     --\n");
     printf("=============================\n");
@@ -91,10 +102,11 @@ void resumenFinal(int nivel, int recogidasTotal, int totalesJuego, int pasosTota
 }
 
 // Ciclo principal del juego
-void juego(){
+void juego()
+{
     // Usamos ensamblador para contar rapido cuantas monedas hay en los 3 mapas juntos (total historico)
     int monedasNivelesTotales = monedasTotales(&mapa1[0][0], ROWS * COLUMNS, 'M') + monedasTotales(&mapa2[0][0], ROWS * COLUMNS, 'M') + monedasTotales(&mapa3[0][0], ROWS * COLUMNS, 'M');
-    
+
     // Variables locales para llevar el control del mapa actual. Se reinician en cada nivel.
     int monedasRecogidasNivel = 0;
     int pasosNivel = 0;
@@ -102,10 +114,10 @@ void juego(){
     int playerX = 1;
     bool haveKey = false;
     int nivel = 1;
-    
+
     // Puntero clave: nos dice en que mapa de los 3 estamos jugando actualmente
-    char (*mapaActual)[COLUMNS] = mapa1; 
-    
+    char (*mapaActual)[COLUMNS] = mapa1;
+
     // Calculamos datos del mapa actual para el HUD
     int monedasDelNivelActual = monedasTotales(&mapaActual[0][0], ROWS * COLUMNS, 'M');
     int libres = contarCeldaslibres(&mapaActual[0][0], ROWS * COLUMNS);
@@ -115,13 +127,14 @@ void juego(){
     // Bucle del juego. Corre hasta presionar la tecla 'q' (ASCII 113) o error (EOF)
     while (tecla != 113 && tecla != EOF)
     {
-        system("cls"); // Limpia la terminal
-        
+        // system("cls"); // Limpia la terminal
+        printf("\033[H"); // Limpia las terminal
+
         // Imprime el HUD con la informacion en tiempo real
         printf("--- NIVEL %d ---\n", nivel);
         printf("Llaves: %s\n", haveKey ? "Si" : "No");
         printf("Pasos: %d\n", pasosNivel);
-        
+
         // Llamamos a la camara pasandole donde estamos y en que mapa
         imprimirMapa(playerY, playerX, mapaActual);
 
@@ -135,46 +148,58 @@ void juego(){
             if (validar_movimiento(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, '#'))
             {
                 // Si la celda destino es una moneda, la recogemos y borramos del mapa poniendo un punto
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'M')) { 
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'M'))
+                {
                     monedasRecogidasNivel++;
                     mapaActual[playerY - 1][playerX] = '.';
                 }
                 // Si la celda destino es la llave, avisamos al sistema que ya la tenemos y la borramos
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'K')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'K'))
+                {
                     haveKey = true;
                     mapaActual[playerY - 1][playerX] = '.';
                 }
                 // Logica de la puerta
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'D')) {
-                    if(haveKey) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'D'))
+                {
+                    if (haveKey)
+                    {
                         mapaActual[playerY - 1][playerX] = '.'; // Tienes llave, la puerta se abre (se borra)
-                    } else {
+                    }
+                    else
+                    {
                         printf("Necesitas la llave para abrir la puerta.\n");
                         Sleep(1000);
                         continue; // Corta la ejecucion aqui para evitar que el jugador avance atravesando la puerta
                     }
                 }
                 // Logica de transicion de nivel al tocar la salida 'E'
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'E')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY - 1), playerX, 'E'))
+                {
                     // Traspasamos las monedas y pasos del nivel a nuestras variables historicas
                     monedasRecogidasTotal += monedasRecogidasNivel;
                     pasosTotales += pasosNivel;
 
                     Sleep(1000);
                     system("cls");
-                    
+
                     // Decidimos a que mapa mandarlo dependiendo del nivel
-                    if(nivel == 1) {
+                    if (nivel == 1)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
-                    } else if(nivel == 2) {
+                    }
+                    else if (nivel == 2)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
-                    } else {
+                    }
+                    else
+                    {
                         // Si ya paso los niveles, mostramos resumen final y salimos del juego
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
@@ -184,7 +209,7 @@ void juego(){
                         Sleep(4000);
                         return;
                     }
-                    
+
                     // Si paso a un nivel nuevo, reseteamos al jugador y sus variables a cero
                     playerY = 1;
                     playerX = 1;
@@ -193,9 +218,9 @@ void juego(){
                     pasosNivel = 0;
                     monedasDelNivelActual = monedasTotales(&mapaActual[0][0], ROWS * COLUMNS, 'M');
                     libres = contarCeldaslibres(&mapaActual[0][0], ROWS * COLUMNS);
-                    continue; 
-                } 
-                
+                    continue;
+                }
+
                 // Si no choco con paredes ni puertas bloqueadas, movemos al personaje en el eje Y y sumamos el paso
                 playerY--;
                 pasosNivel++;
@@ -208,41 +233,53 @@ void juego(){
             // Valida celda destino abajo (playerY + 1)
             if (validar_movimiento(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, '#'))
             {
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'M')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'M'))
+                {
                     monedasRecogidasNivel++;
                     mapaActual[playerY + 1][playerX] = '.';
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'K')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'K'))
+                {
                     haveKey = true;
                     mapaActual[playerY + 1][playerX] = '.';
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'D')) {
-                    if(haveKey) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'D'))
+                {
+                    if (haveKey)
+                    {
                         mapaActual[playerY + 1][playerX] = '.';
-                    } else {
+                    }
+                    else
+                    {
                         printf("Necesitas la llave para abrir la puerta.\n");
                         Sleep(1000);
                         continue;
                     }
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'E')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, (playerY + 1), playerX, 'E'))
+                {
                     monedasRecogidasTotal += monedasRecogidasNivel;
                     pasosTotales += pasosNivel;
 
                     Sleep(1000);
                     system("cls");
-                    
-                    if(nivel == 1) {
+
+                    if (nivel == 1)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
-                    } else if(nivel == 2) {
+                    }
+                    else if (nivel == 2)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
-                    } else {
+                    }
+                    else
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         system("cls");
@@ -251,7 +288,7 @@ void juego(){
                         Sleep(4000);
                         return;
                     }
-                    
+
                     playerY = 1;
                     playerX = 1;
                     haveKey = false;
@@ -261,7 +298,7 @@ void juego(){
                     libres = contarCeldaslibres(&mapaActual[0][0], ROWS * COLUMNS);
                     continue;
                 }
-                
+
                 playerY++;
                 pasosNivel++;
             }
@@ -273,41 +310,53 @@ void juego(){
             // Valida celda destino izquierda (playerX - 1)
             if (validar_movimiento(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), '#'))
             {
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'M')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'M'))
+                {
                     monedasRecogidasNivel++;
                     mapaActual[playerY][playerX - 1] = '.';
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'K')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'K'))
+                {
                     haveKey = true;
                     mapaActual[playerY][playerX - 1] = '.';
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'D')) {
-                    if(haveKey) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'D'))
+                {
+                    if (haveKey)
+                    {
                         mapaActual[playerY][playerX - 1] = '.';
-                    } else {
+                    }
+                    else
+                    {
                         printf("Necesitas la llave para abrir la puerta.\n");
                         Sleep(1000);
                         continue;
                     }
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'E')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX - 1), 'E'))
+                {
                     monedasRecogidasTotal += monedasRecogidasNivel;
                     pasosTotales += pasosNivel;
 
                     Sleep(1000);
                     system("cls");
-                    
-                    if(nivel == 1) {
+
+                    if (nivel == 1)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
-                    } else if(nivel == 2) {
+                    }
+                    else if (nivel == 2)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
-                    } else {
+                    }
+                    else
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         system("cls");
@@ -316,7 +365,7 @@ void juego(){
                         Sleep(4000);
                         return;
                     }
-                    
+
                     playerY = 1;
                     playerX = 1;
                     haveKey = false;
@@ -326,7 +375,7 @@ void juego(){
                     libres = contarCeldaslibres(&mapaActual[0][0], ROWS * COLUMNS);
                     continue;
                 }
-                
+
                 playerX--;
                 pasosNivel++;
             }
@@ -338,41 +387,53 @@ void juego(){
             // Valida celda destino derecha (playerX + 1)
             if (validar_movimiento(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), '#'))
             {
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'M')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'M'))
+                {
                     monedasRecogidasNivel++;
                     mapaActual[playerY][playerX + 1] = '.';
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'K')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'K'))
+                {
                     haveKey = true;
                     mapaActual[playerY][playerX + 1] = '.';
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'D')) {
-                    if(haveKey) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'D'))
+                {
+                    if (haveKey)
+                    {
                         mapaActual[playerY][playerX + 1] = '.';
-                    } else {
+                    }
+                    else
+                    {
                         printf("Necesitas la llave para abrir la puerta.\n");
                         Sleep(1000);
                         continue;
                     }
                 }
-                if(findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'E')) {
+                if (findObject(&mapaActual[0][0], COLUMNS, playerY, (playerX + 1), 'E'))
+                {
                     monedasRecogidasTotal += monedasRecogidasNivel;
                     pasosTotales += pasosNivel;
 
                     Sleep(1000);
                     system("cls");
-                    
-                    if(nivel == 1) {
+
+                    if (nivel == 1)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
-                    } else if(nivel == 2) {
+                    }
+                    else if (nivel == 2)
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
-                    } else {
+                    }
+                    else
+                    {
                         resumen(nivel, monedasRecogidasNivel, monedasDelNivelActual, pasosNivel);
                         Sleep(3000);
                         system("cls");
@@ -381,7 +442,7 @@ void juego(){
                         Sleep(4000);
                         return;
                     }
-                    
+
                     playerY = 1;
                     playerX = 1;
                     haveKey = false;
@@ -391,11 +452,12 @@ void juego(){
                     libres = contarCeldaslibres(&mapaActual[0][0], ROWS * COLUMNS);
                     continue;
                 }
-                
+
                 playerX++;
                 pasosNivel++;
             }
         }
     }
+    system("cls");
 }
 #endif
