@@ -5,6 +5,7 @@ global findObject
 global monedasTotales
 global validar_movimiento
 global contarCeldaslibres
+global score
 section .text
 
 findObject:
@@ -93,4 +94,22 @@ contarCeldaslibres:
     dec edx             ; decrementar celdas restantes
     jnz .ciclo_contar
     .fin:
+    ret
+score:
+ ; puntuacion=(monedas*valorMoneda)-(pasos*valorPasos)+(nivel*valorNiveles)
+    
+    xor rax, rax
+    imul ecx, 500
+    add eax, ecx
+    imul edx, 5
+    sub eax, edx
+    imul r8d, 5000
+    add eax, r8d
+
+    cmp eax, 0
+    jge .noNeg
+
+    mov eax, 0
+
+    .noNeg:
     ret

@@ -12,9 +12,9 @@ int findObject(char *matrix, int columns, int searchInRow, int searchInColumn, c
 int monedasTotales(char *matrix, int celdas, char character);
 int validar_movimiento(char *matrix, int columns, int searchInRow, int searchInColumn, char character);
 int contarCeldaslibres(char *matrix, int celdas);
-  int monedasRecogidasTotal = 0;
-    int pasosTotales = 0;
-int puntajeFinal = 0;
+int score(int monedasRecogidas, int pasos, int nivelesCompletados);
+int monedasRecogidasTotal = 0;
+int pasosTotales = 0;
 void imprimirMapa(int pY, int pX, char mapa[ROWS][COLUMNS])
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -68,6 +68,7 @@ void resumenFinal(int nivel, int recogidasTotal, int totalesJuego, int pasosTota
     printf("Niveles completados: %d\n", nivel - 1);
     printf("Monedas totales    : %d / %d\n", recogidasTotal, totalesJuego);
     printf("Pasos totales      : %d\n", pasosTotales);
+    printf("Puntaje final      : %d\n", score(recogidasTotal, pasosTotales, nivel - 1));
 }
 
 void juego(){
