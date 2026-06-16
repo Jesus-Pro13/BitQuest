@@ -26,6 +26,7 @@ forma de manejo:
     
     - ejecutar:
         - dentro de la misma carpeta, ejecutar BitQuest.exe
+        "Es mejor ejecutarlo directamente en powershell que en la terminal integrada de VS Code"
     
     Con esto ya puedes jugar BitQuest!
 

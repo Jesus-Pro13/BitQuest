@@ -190,6 +190,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
+                        system("cls");
                     }
                     else if (nivel == 2)
                     {
@@ -197,6 +198,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
+                        system("cls");
                     }
                     else
                     {
@@ -270,6 +272,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
+                        system("cls");
                     }
                     else if (nivel == 2)
                     {
@@ -277,6 +280,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
+                        system("cls");
                     }
                     else
                     {
@@ -347,6 +351,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
+                        system("cls");
                     }
                     else if (nivel == 2)
                     {
@@ -354,6 +359,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
+                        system("cls");
                     }
                     else
                     {
@@ -424,6 +430,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa2;
+                        system("cls");
                     }
                     else if (nivel == 2)
                     {
@@ -431,6 +438,7 @@ void juego()
                         Sleep(3000);
                         nivel++;
                         mapaActual = mapa3;
+                        system("cls");
                     }
                     else
                     {
